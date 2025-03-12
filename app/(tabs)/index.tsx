@@ -14,7 +14,7 @@ import useFetch from "@/services/useFetch"
 import { fetchMovies } from "@/services/api"
 import MovieCard from "@/components/MovieCard"
 
-const Index = () => {
+const Home = () => {
   const router = useRouter()
 
   const {
@@ -83,4 +83,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Home
