@@ -1,10 +1,9 @@
-import { Image, View, Text, TextInput } from "react-native"
-import React from "react"
+import { Image, TextInput, View } from "react-native"
 import { icons } from "@/constants/icons"
 
 interface Props {
   placeholder: string
-  value: string
+  value?: string
   onChangeText?: (text: string) => void
   onPress?: () => void
 }

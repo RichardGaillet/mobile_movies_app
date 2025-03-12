@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native"
+import MovieCard from "@/components/MovieCard"
 import { icons } from "@/constants/icons"
 import { images } from "@/constants/images"
-import MovieCard from "@/components/MovieCard"
 import SearchBar from "@/components/SearchBar"
 import { fetchMovies } from "@/services/api"
-import useFetch from "@/services/useFetch"
 import { updateSearchCount } from "@/services/appwrite"
+import useFetch from "@/services/useFetch"
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -23,9 +23,6 @@ const Search = () => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies()
-
-        if (movies?.length > 0 && movies?.[0])
-          await updateSearchCount(searchQuery, movies?.[0])
       } else {
         reset()
       }
@@ -33,6 +30,11 @@ const Search = () => {
 
     return () => clearTimeout(timeoutId)
   }, [searchQuery])
+
+  useEffect(() => {
+    if (movies?.length > 0 && movies?.[0])
+      updateSearchCount(searchQuery, movies?.[0])
+  }, [movies])
 
   return (
     <View className="flex-1 bg-primary">
