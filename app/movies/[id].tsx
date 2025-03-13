@@ -1,5 +1,5 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import { router, useLocalSearchParams } from "expo-router"
+import { Image, ScrollView, Text, View } from "react-native"
+import { Link, useLocalSearchParams } from "expo-router"
 import GoBackButton from "@/components/GoBackButton"
 import { icons } from "@/constants/icons"
 import { fetchMovieDetails } from "@/services/api"
@@ -44,18 +44,13 @@ const MovieDetails = () => {
         </View>
         <View className="flex-col items-start justify-center mt-5 px-5">
           <Text className="text-white font-bold text-xl">{movie?.title}</Text>
-          {movie?.belongs_to_collection?.name && (
-            <TouchableOpacity
-              onPress={() =>
-                router.navigate(
-                  `/collections/${movie.belongs_to_collection?.id}`
-                )
-              }
+          {movie?.belongs_to_collection && (
+            <Link
+              href={`/collections/${movie.belongs_to_collection?.id}`}
+              className="text-gray-300 font-semibold text-md underline"
             >
-              <Text className="text-gray-300 font-semibold text-md underline">
-                {movie.belongs_to_collection.name}
-              </Text>
-            </TouchableOpacity>
+              {movie.belongs_to_collection.name || "Movies collection"}
+            </Link>
           )}
           <View className="flex-row items-center gap-x-1 mt-2">
             <Text className="text-light-200 text-sm">
