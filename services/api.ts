@@ -46,3 +46,23 @@ export const fetchMovieDetails = async (
     throw error
   }
 }
+
+export const fetchCollectionDetails = async (
+  collectionId: number
+): Promise<CollectionDetails> => {
+  try {
+    const response = await fetch(
+      `${TMDB_CONFIG.BASE_URL}/collection/${collectionId}`,
+      {
+        method: "GET",
+        headers: TMDB_CONFIG.headers,
+      }
+    )
+    if (!response.ok) throw new Error("Failed to fetch collection details")
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}

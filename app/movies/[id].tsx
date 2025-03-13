@@ -1,5 +1,6 @@
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { router, useLocalSearchParams } from "expo-router"
+import GoBackButton from "@/components/GoBackButton"
 import { icons } from "@/constants/icons"
 import { fetchMovieDetails } from "@/services/api"
 import useFetch from "@/services/useFetch"
@@ -43,6 +44,19 @@ const MovieDetails = () => {
         </View>
         <View className="flex-col items-start justify-center mt-5 px-5">
           <Text className="text-white font-bold text-xl">{movie?.title}</Text>
+          {movie?.belongs_to_collection?.name && (
+            <TouchableOpacity
+              onPress={() =>
+                router.navigate(
+                  `/collections/${movie.belongs_to_collection?.id}`
+                )
+              }
+            >
+              <Text className="text-gray-300 font-semibold text-md underline">
+                {movie.belongs_to_collection.name}
+              </Text>
+            </TouchableOpacity>
+          )}
           <View className="flex-row items-center gap-x-1 mt-2">
             <Text className="text-light-200 text-sm">
               {movie?.release_date.split("-")[0]}
@@ -95,17 +109,7 @@ const MovieDetails = () => {
           />
         </View>
       </ScrollView>
-      <TouchableOpacity
-        className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
-        onPress={router.back}
-      >
-        <Image
-          source={icons.arrow}
-          className="size-5 mr-1 mt-0.5 rotate-180"
-          tintColor="#fff"
-        />
-        <Text className="text-white font-semibold text-base">Go back</Text>
-      </TouchableOpacity>
+      <GoBackButton />
     </View>
   )
 }
